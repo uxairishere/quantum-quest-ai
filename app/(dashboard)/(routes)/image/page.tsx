@@ -8,12 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from 'axios';
-import { ImageIcon } from "lucide-react";
+import { Download, ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from 'zod';
-import { amountOptions, formSchema } from "./constants";
+import { amountOptions, formSchema, resolutionOptions } from "./constants";
+import { Card, CardFooter } from "@/components/ui/card";
+import Image from "next/image";
 
 const ImagePage = () => {
 
@@ -25,7 +27,7 @@ const ImagePage = () => {
         defaultValues: {
             prompt: "",
             amount: "1",
-            resoltion: "512x512"
+            resolution: "512x512"
         }
     })
 
@@ -83,7 +85,7 @@ const ImagePage = () => {
                                 control={form.control}
                                 name="amount"
                                 render={({ field }) => (
-                                    <FormItem className="col-span-12 lg:col-span-2">
+                                    <FormItem className="col-span-12 lg:col-span-6">
                                         <Select
                                             disabled={isLoading}
                                             onValueChange={field.onChange}
@@ -98,6 +100,35 @@ const ImagePage = () => {
                                             </FormControl>
                                             <SelectContent>
                                                 {amountOptions.map((option) => (
+                                                    <SelectItem key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FormItem>
+                                )}
+
+                            />
+                            <FormField
+                                control={form.control}
+                                name="resolution"
+                                render={({ field }) => (
+                                    <FormItem className="col-span-12 lg:col-span-6">
+                                        <Select
+                                            disabled={isLoading}
+                                            onValueChange={field.onChange}
+                                            value={field.value}
+                                            defaultValue={field.value}
+
+                                        >
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue defaultValue={field.value} />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {resolutionOptions.map((option) => (
                                                     <SelectItem key={option.value} value={option.value}>
                                                         {option.label}
                                                     </SelectItem>
@@ -125,8 +156,29 @@ const ImagePage = () => {
                         <Empty label="No images generated!" />
                     )
                     }
-                    <div>
-                        Images will be rendered here
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
+                        {images.map((src) => (
+                            <Card
+                                key={src}
+                                className="rounded-lg overflow-hidden"
+                            >
+                                <div className="relative aspect-square">
+                                    <Image
+                                        alt="Image"
+                                        fill
+                                        src={src}
+                                    />
+                                </div>
+                                <CardFooter className="p-2">
+                                    <Button onClick={() => window.open(src)} variant="secondary" className="w-full">
+                                        <Download className="h-4 w-4 mr-2" />
+                                        Download
+                                    </Button>
+                                </CardFooter>
+                            </Card>
+                        ))
+
+                        }
                     </div>
                 </div>
             </div>

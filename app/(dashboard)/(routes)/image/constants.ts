@@ -6,7 +6,7 @@ export const formSchema = z.object({
         message: "Image propmt is required",
     }),
     amount: z.string().min(1),
-    resoltion: z.string().min(1)
+    resolution: z.string().min(1)
 });
 
 export const amountOptions = [
