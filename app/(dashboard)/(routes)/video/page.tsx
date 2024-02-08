@@ -5,6 +5,7 @@ import { Loader } from "@/components/loader";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useProModal } from "@/hooks/use-pro-modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from 'axios';
 import { Music } from "lucide-react";
@@ -17,7 +18,7 @@ import { formSchema } from "./constants";
 const VideoPage = () => {
 
     const router = useRouter();
-
+    const proModal = useProModal();
     const [video, setVideo] = useState<string>();
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -38,9 +39,10 @@ const VideoPage = () => {
             setVideo(response.data[0])
 
             form.reset();
-        } catch (error) {
-            // TODO: Open Pro Modal
-            console.log(error)
+        } catch (error: any) {
+            if(error?.response?.status === 403) {
+                proModal.onOpen();
+            }
         } finally {
             router.refresh();
         }

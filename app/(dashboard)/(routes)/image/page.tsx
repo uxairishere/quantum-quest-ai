@@ -3,23 +3,25 @@ import { Empty } from "@/components/empty";
 import { Heading } from "@/components/heading";
 import { Loader } from "@/components/loader";
 import { Button } from "@/components/ui/button";
+import { Card, CardFooter } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useProModal } from "@/hooks/use-pro-modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from 'axios';
 import { Download, ImageIcon } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from 'zod';
 import { amountOptions, formSchema, resolutionOptions } from "./constants";
-import { Card, CardFooter } from "@/components/ui/card";
-import Image from "next/image";
 
 const ImagePage = () => {
 
     const router = useRouter();
+    const proModal = useProModal();
     const [images, setImages] = useState<string[]>([]);
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -42,9 +44,10 @@ const ImagePage = () => {
             setImages(urls);
 
             form.reset();
-        } catch (error) {
-            // TODO: Open Pro Modal
-            console.log(error)
+        } catch (error: any) {
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
         } finally {
             router.refresh();
         }
@@ -170,10 +173,10 @@ const ImagePage = () => {
                                     />
                                 </div>
                                 <CardFooter className="p-2">
-                                    <Button 
-                                    onClick={() => window.open(src)} 
-                                    variant="secondary" 
-                                    className="w-full"
+                                    <Button
+                                        onClick={() => window.open(src)}
+                                        variant="secondary"
+                                        className="w-full"
                                     >
                                         <Download className="h-4 w-4 mr-2" />
                                         Download
