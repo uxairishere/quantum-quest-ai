@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from 'zod';
 import { formSchema } from "./constants";
+import toast from "react-hot-toast";
 
 const MusicPage = () => {
 
@@ -40,8 +41,10 @@ const MusicPage = () => {
 
             form.reset();
         } catch (error: any) {
-            if(error?.response?.status === 403) {
+            if (error?.response?.status === 403) {
                 proModal.onOpen();
+            } else {
+                toast.error("Something went wrong")
             }
         } finally {
             router.refresh();
@@ -97,9 +100,9 @@ const MusicPage = () => {
                     )
                     }
                     {music &&
-                    <audio controls className="w-full mt-8"> 
-                    <source src={music} />
-                    </audio>
+                        <audio controls className="w-full mt-8">
+                            <source src={music} />
+                        </audio>
                     }
                 </div>
             </div>
