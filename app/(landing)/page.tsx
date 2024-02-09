@@ -1,14 +1,14 @@
 import Navbar from "@/components/Navbar";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { buttonVariants } from "@/components/ui/button";
+import { auth } from "@clerk/nextjs";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-// ContextQube
-// DocSense Navigator
-// ParseFlow AI
-// QuantumQuest
 const LandingPage = () => {
+
+  const {userId} = auth();
+
   return (
     <>
       <Navbar />
@@ -19,7 +19,7 @@ const LandingPage = () => {
           </p>
         </div>
         <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
-          Chat with your <span className="text-green-600">documents</span> in seconds.
+          Chat with your <span className="text-green-600 dark:text-orange-600">documents</span> in seconds.
         </h1>
         <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
           QuantumQuest allows you to chat with your PDF document. Simply
@@ -29,7 +29,7 @@ const LandingPage = () => {
           size: 'lg',
           className: 'mt-5'
         })} href={"/dashboard"} target="_blank">
-          Get started <ArrowRight className="ml-2 h-5 w-5" />
+          {!userId ? "Get started": "Dashboard"} <ArrowRight className="ml-2 h-5 w-5" />
         </Link>
       </MaxWidthWrapper>
       {/* value proposition section  */}
