@@ -50,7 +50,7 @@ const ConversationPage = () => {
 
             form.reset();
         } catch (error: any) {
-            if(error?.response?.status === 403) {
+            if (error?.response?.status === 403) {
                 proModal.onOpen();
             } else {
                 toast.error("Something went wrong")
@@ -74,7 +74,7 @@ const ConversationPage = () => {
                     <Form {...form}>
                         <form
                             onSubmit={form.handleSubmit(onSubmit)}
-                            className="rounded-lg border bg-white w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2 "
+                            className="rounded-lg border bg-transparent w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2 "
                         >
                             <FormField
                                 name="prompt"
@@ -82,7 +82,7 @@ const ConversationPage = () => {
                                     <FormItem className="col-span-12 lg:col-span-10">
                                         <FormControl className="m-0 p-0">
                                             <Input
-                                                className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+                                                className="border-0 bg-transparent outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                                                 disabled={isLoading}
                                                 placeholder="How do I calculate the radius of a circule?"
                                                 {...field}
@@ -99,7 +99,7 @@ const ConversationPage = () => {
                 </div>
                 <div className="space-y-4 mt-4">
                     {isLoading && (
-                        <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
+                        <div className="p-8 rounded-lg w-full flex items-center justify-center">
                             <Loader />
                         </div>
                     )
@@ -119,7 +119,7 @@ const ConversationPage = () => {
                             >
                                 {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
                                 <p className="text-sm">
-                                {message.content}
+                                    {message.content}
                                 </p>
                             </div>
                         ))}
