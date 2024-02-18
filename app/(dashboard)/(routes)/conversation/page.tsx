@@ -1,24 +1,24 @@
 'use client';
-import { Heading } from "@/components/heading"
-import { Bot, MessageSquare } from "lucide-react"
-import { useForm } from "react-hook-form"
-import * as z from 'zod'
-import { formSchema } from "./constants";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { BotAvatar } from "@/components/bot-avatar";
+import { Empty } from "@/components/empty";
+import { Heading } from "@/components/heading";
+import { Loader } from "@/components/loader";
+import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
-import axios from 'axios';
-import { Empty } from "@/components/empty";
-import { Loader } from "@/components/loader";
-import { cn } from "@/lib/utils";
 import { UserAvatar } from "@/components/user-avatar";
-import { BotAvatar } from "@/components/bot-avatar";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from 'axios';
+import { MessageSquare } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import * as z from 'zod';
+import { formSchema } from "./constants";
 
 const ConversationPage = () => {
 
@@ -74,7 +74,7 @@ const ConversationPage = () => {
                     <Form {...form}>
                         <form
                             onSubmit={form.handleSubmit(onSubmit)}
-                            className="rounded-lg border bg-transparent w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2 "
+                            className="rounded-lg border bg-transparent w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2"
                         >
                             <FormField
                                 name="prompt"
