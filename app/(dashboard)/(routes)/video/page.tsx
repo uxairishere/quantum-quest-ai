@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import * as z from 'zod';
 import { formSchema } from "./constants";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 const VideoPage = () => {
 
@@ -75,7 +76,7 @@ const VideoPage = () => {
                                             <Input
                                                 className="border-0 bg-transparent outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                                                 disabled={isLoading}
-                                                placeholder="Clowen fish swimming around a coral reef"
+                                                placeholder="go-pro video of a polar bear diving in the ocean, 8k, HD, dslr, nature footage"
                                                 {...field}
                                             />
                                         </FormControl>
@@ -90,7 +91,7 @@ const VideoPage = () => {
                 </div>
                 <div className="space-y-4 mt-4">
                     {isLoading && (
-                        <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
+                        <div className="p-8 rounded-lg w-full flex items-center justify-center">
                             <Loader />
                         </div>
                     )
